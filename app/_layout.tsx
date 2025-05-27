@@ -3,12 +3,13 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import { RecoilRoot } from "recoil";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    dunggeunmon : require("@assets/fonts/DungGeunMo.ttf"),
-    chab : require("@assets/fonts/chab.otf"),
-    kotra : require("@assets/fonts/kotra.otf")
+    dunggeunmon: require("@assets/fonts/DungGeunMo.ttf"),
+    chab: require("@assets/fonts/chab.otf"),
+    kotra: require("@assets/fonts/kotra.otf")
   });
 
   if (!loaded) {
@@ -17,12 +18,14 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider value={DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="LoginScreen" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </RecoilRoot>
+
   );
 }
