@@ -6,6 +6,7 @@
     "paths": {
       "@app/*" : ["app/*"],
       "@hooks/*" : ["hooks/*"],
+      "@states/*" : ["states/*"],
       "@assets/*" : ["assets/*"],
       "@constants/*" : ["constants/*"],
       "@components/*" : ["components/*"]
