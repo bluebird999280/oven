@@ -1,11 +1,11 @@
 import {
+    Pressable,
     SafeAreaView,
     StyleSheet,
-    Text,
-    View
+    Text
 } from 'react-native';
 
-import { loginApi } from '@apis/login';
+import { loginApi } from '@apis/auth';
 import AuthButton from '@components/Auth/AuthButton';
 import Input from '@components/Auth/Input';
 import SplashLogo from '@components/Layout/SplashLogo';
@@ -70,9 +70,9 @@ export default function LoginScreen() {
             />
             <AuthButton text="로그인" onPress={login} />
             <Link href="/RegisterScreen" asChild>
-                <View style={styles.button}>
+                <Pressable style={styles.button}>
                     <Text style={styles.text}>회원가입 하기</Text>
-                </View>
+                </Pressable>
             </Link>
         </SafeAreaView>
     );
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: BEIGE
+        backgroundColor: BEIGE,
+        paddingHorizontal : 20,
     },
     title: {
         color: BROWN,
@@ -94,15 +95,15 @@ const styles = StyleSheet.create({
         fontFamily: 'chab',
     },
     button: {
-        paddingVertical : 10,
-        paddingHorizontal : 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         borderRadius: 4,
-        backgroundColor : WHITE
+        backgroundColor: WHITE
     },
-    text : {
-        color : "black",
-        fontSize : 15,
-        fontWeight : 600,
-        fontFamily : "kotra"
+    text: {
+        color: "black",
+        fontSize: 15,
+        fontWeight: 600,
+        fontFamily: "kotra"
     }
 })

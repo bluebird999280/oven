@@ -1,102 +1,162 @@
+import { registerApi } from '@apis/auth';
+import AuthButton from '@components/Auth/AuthButton';
+import Input from '@components/Auth/Input';
+import { BEIGE, BROWN, ORANGE, WHITE } from '@constants/Colors';
+import globalState from "@states";
+import { useRouter } from 'expo-router';
+import { useAtom } from 'jotai';
+import { useCallback, useState } from 'react';
 import {
-    Button,
+    Image,
     SafeAreaView,
     StyleSheet,
     Text,
+    TouchableOpacity,
+    View
 } from 'react-native';
 
-import { loginApi } from '@apis/login';
-import AuthButton from '@components/Auth/AuthButton';
-import Input from '@components/Auth/Input';
-import SplashLogo from '@components/Layout/SplashLogo';
-import { BEIGE, BROWN, ORANGE } from '@constants/Colors';
-import globalState from "@states";
-import { Link } from 'expo-router';
-import { useAtom } from 'jotai';
-import { useState } from 'react';
-
 export default function RegisterScreen() {
-    const [isLogin, setIsLogin] = useAtom(globalState.isLogin);
-    const [nickname, setNickname] = useAtom(globalState.nickname);
-    const [userId, setUserId] = useAtom(globalState.userId);
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const router = useRouter();
+    const [name, setName] = useState("");
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [isDupChecked, setIsDupChecked] = useState(false);
 
-    const HandleChangeUsername = (id: string) => {
-        setUsername(id);
+    const [isModalOpened, setIsModalOpened] = useAtom(globalState.isModal);
+    const [workList, setWorkList] = useAtom(globalState.authWork);
+    const [lastWorkId, setLastWorkId] = useAtom(globalState.lastWorkId);
+
+    const handleChangeName = (name : string) => {
+        setName(name);
     };
-    const HandleChangePassword = (password: string) => {
+
+    const handleChangeId = (id : string) => {
+        setId(id);
+    };
+
+    const handleChangePassword = (password : string) => {
         setPassword(password);
     };
 
-    const login = async () => {
-        if (username !== "" && password !== "") {
+    const handleChangePasswordConfirm = (passwordConfirm : string) => {
+        setPasswordConfirm(passwordConfirm);
+    };
+
+    const register = useCallback(async () => {
+            if (name === "") {
+                setErrorMessage("이름을 입력해주세요.");
+                return;
+            }
+    
+            if (id === "") {
+                setErrorMessage("아이디를 입력해주세요.");
+                return;
+            }
+
+            if (password === "") {
+                setErrorMessage("비밀번호를 입력해주세요.");
+                return;
+            }
+
+            if (passwordConfirm === "") {
+                setErrorMessage("비밀번호 확인을 입력해주세요.");
+                return;
+            }
+    
             try {
-                const { accessToken, refreshToken, nickname, userId } = await loginApi(username, password);
-
+                const { accessToken, refreshToken, nickname, userId } = await registerApi(name, id, password, passwordConfirm);
+                
                 setErrorMessage("");
-                setUsername("");
+                setName("");
+                setId("");
                 setPassword("");
-                setUserId(userId);
-                setNickname(nickname);
-
-                localStorage.setItem("accessToken", accessToken);
-                localStorage.setItem("refreshToken", refreshToken);
+                setPasswordConfirm("");
+                router.navigate("/LoginScreen");
             } catch (e) {
                 setErrorMessage(e as string);
             }
-        }
-    }
+        }, [name, id, password, passwordConfirm, router]);
 
     return (
         <SafeAreaView style={styles.container}>
-            <SplashLogo />
-            <Text style={styles.Title}>로그인</Text>
-            <Input placeholder="아이디" value={username} onChangeText={HandleChangeUsername} secureTextEntry={false} />
+            <Image style={styles.ovenLogo} source={require("@assets/img/oven_logo.png")} />
+            <Text style={styles.title}>회원가입</Text>
+            <Input
+                placeholder="이름"
+                value={name}
+                onChangeText={handleChangeName}
+                secureTextEntry={false}
+            />
+            <View style={styles.idInputWrapper}>
+                <Input
+                    placeholder="아이디"
+                    value={id}
+                    onChangeText={handleChangeId}
+                    secureTextEntry={false}
+                />
+                <TouchableOpacity style={styles.checkDuplicationButton} onPress={() => {}}>
+                    <Text style={styles.duplicationText}>중복 체크</Text>
+                </TouchableOpacity>
+            </View>
             <Input
                 placeholder="비밀번호"
                 value={password}
-                onChangeText={HandleChangePassword}
+                onChangeText={handleChangePassword}
                 secureTextEntry={true}
             />
-            <AuthButton text="로그인" onPress={login} />
-            <Link href="/RegisteScreen">
-                <Button
-                    title="회원가입"
-                    onPress={pressButton}
-                />
-            </Link>
+            <Input
+                placeholder="비밀번호 확인"
+                value={passwordConfirm}
+                onChangeText={handleChangePasswordConfirm}
+                secureTextEntry={true}
+            />
+            <AuthButton text="관심 작품 선택하러 가기" onPress={() => {}} />
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: BEIGE
+        backgroundColor: BEIGE,
+        paddingHorizontal : 20
     },
-    ovenText: {
-        color: ORANGE,
-        fontSize: 70,
-        fontWeight: 800,
-        marginVertical: 20,
-        marginHorizontal: 0,
-        fontFamily: "chab",
-    },
-    Title: {
+    title: {
         color: BROWN,
         fontSize: 40,
-        fontWeight: 500,
+        fontWeight: 800,
         marginVertical: 20,
         marginHorizontal: 0,
         fontFamily: 'chab',
     },
-    OvenLogo: {
-        width: 100,
-        height: 100
+    ovenLogo : {
+        width : 250,
+        height: 100,
+        objectFit : "contain"
+    },
+    idInputWrapper : {
+        width : "100%",
+        display : "flex",
+        alignItems : "center",
+        flexDirection : "row",
+        gap : 10
+    },
+    checkDuplicationButton : {
+        width: "20%",
+        height: 50,
+        flexShrink : 1,
+        borderRadius : 15,
+        backgroundColor : ORANGE,
+        justifyContent : "center",
+        alignItems : "center",
+    },
+    duplicationText : {
+        color : WHITE,
+        fontFamily : "kotra",
+        fontSize : 16
     }
 })
