@@ -1,7 +1,7 @@
 import { registerApi } from '@apis/auth';
 import AuthButton from '@components/Auth/AuthButton';
 import Input from '@components/Auth/Input';
-import { BEIGE, BROWN, ORANGE, WHITE } from '@constants/Colors';
+import { BEIGE, BROWN, ORANGE, RED, WHITE } from '@constants/Colors';
 import globalState from "@states";
 import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
@@ -28,56 +28,56 @@ export default function RegisterScreen() {
     const [workList, setWorkList] = useAtom(globalState.authWork);
     const [lastWorkId, setLastWorkId] = useAtom(globalState.lastWorkId);
 
-    const handleChangeName = (name : string) => {
+    const handleChangeName = (name: string) => {
         setName(name);
     };
 
-    const handleChangeId = (id : string) => {
+    const handleChangeId = (id: string) => {
         setId(id);
     };
 
-    const handleChangePassword = (password : string) => {
+    const handleChangePassword = (password: string) => {
         setPassword(password);
     };
 
-    const handleChangePasswordConfirm = (passwordConfirm : string) => {
+    const handleChangePasswordConfirm = (passwordConfirm: string) => {
         setPasswordConfirm(passwordConfirm);
     };
 
     const register = useCallback(async () => {
-            if (name === "") {
-                setErrorMessage("이름을 입력해주세요.");
-                return;
-            }
-    
-            if (id === "") {
-                setErrorMessage("아이디를 입력해주세요.");
-                return;
-            }
+        if (name === "") {
+            setErrorMessage("이름을 입력해주세요.");
+            return;
+        }
 
-            if (password === "") {
-                setErrorMessage("비밀번호를 입력해주세요.");
-                return;
-            }
+        if (id === "") {
+            setErrorMessage("아이디를 입력해주세요.");
+            return;
+        }
 
-            if (passwordConfirm === "") {
-                setErrorMessage("비밀번호 확인을 입력해주세요.");
-                return;
-            }
-    
-            try {
-                const { accessToken, refreshToken, nickname, userId } = await registerApi(name, id, password, passwordConfirm);
-                
-                setErrorMessage("");
-                setName("");
-                setId("");
-                setPassword("");
-                setPasswordConfirm("");
-                router.navigate("/LoginScreen");
-            } catch (e) {
-                setErrorMessage(e as string);
-            }
-        }, [name, id, password, passwordConfirm, router]);
+        if (password === "") {
+            setErrorMessage("비밀번호를 입력해주세요.");
+            return;
+        }
+
+        if (passwordConfirm === "") {
+            setErrorMessage("비밀번호 확인을 입력해주세요.");
+            return;
+        }
+
+        try {
+            const { accessToken, refreshToken, nickname, userId } = await registerApi(name, id, password, passwordConfirm);
+
+            setErrorMessage("");
+            setName("");
+            setId("");
+            setPassword("");
+            setPasswordConfirm("");
+            router.navigate("/LoginScreen");
+        } catch (e) {
+            setErrorMessage(e as string);
+        }
+    }, [name, id, password, passwordConfirm, router]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -96,7 +96,7 @@ export default function RegisterScreen() {
                     onChangeText={handleChangeId}
                     secureTextEntry={false}
                 />
-                <TouchableOpacity style={styles.checkDuplicationButton} onPress={() => {}}>
+                <TouchableOpacity style={styles.checkDuplicationButton} onPress={() => { }}>
                     <Text style={styles.duplicationText}>중복 체크</Text>
                 </TouchableOpacity>
             </View>
@@ -112,7 +112,12 @@ export default function RegisterScreen() {
                 onChangeText={handleChangePasswordConfirm}
                 secureTextEntry={true}
             />
-            <AuthButton text="관심 작품 선택하러 가기" onPress={() => {}} />
+            {!!errorMessage &&
+                (<View>
+                    <Text style={styles.errorMessageText}>{errorMessage}</Text>
+                </View>)
+            }
+            <AuthButton text="회원가입하기" onPress={register} />
         </SafeAreaView>
     );
 };
@@ -123,7 +128,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: BEIGE,
-        paddingHorizontal : 20
+        paddingHorizontal: 20
     },
     title: {
         color: BROWN,
@@ -133,30 +138,35 @@ const styles = StyleSheet.create({
         marginHorizontal: 0,
         fontFamily: 'chab',
     },
-    ovenLogo : {
-        width : 250,
+    ovenLogo: {
+        width: 250,
         height: 100,
-        objectFit : "contain"
+        objectFit: "contain"
     },
-    idInputWrapper : {
-        width : "100%",
-        display : "flex",
-        alignItems : "center",
-        flexDirection : "row",
-        gap : 10
+    idInputWrapper: {
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 10
     },
-    checkDuplicationButton : {
+    checkDuplicationButton: {
         width: "20%",
         height: 50,
-        flexShrink : 1,
-        borderRadius : 15,
-        backgroundColor : ORANGE,
-        justifyContent : "center",
-        alignItems : "center",
+        flexShrink: 1,
+        borderRadius: 15,
+        backgroundColor: ORANGE,
+        justifyContent: "center",
+        alignItems: "center",
     },
-    duplicationText : {
-        color : WHITE,
-        fontFamily : "kotra",
-        fontSize : 16
+    duplicationText: {
+        color: WHITE,
+        fontFamily: "kotra",
+        fontSize: 16
+    },
+    errorMessageText: {
+        color: RED,
+        fontSize: 13,
+        fontFamily: "kotra"
     }
 })

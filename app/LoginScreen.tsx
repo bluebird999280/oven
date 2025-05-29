@@ -2,14 +2,15 @@ import {
     Pressable,
     SafeAreaView,
     StyleSheet,
-    Text
+    Text,
+    View
 } from 'react-native';
 
 import { loginApi } from '@apis/auth';
 import AuthButton from '@components/Auth/AuthButton';
 import Input from '@components/Auth/Input';
 import SplashLogo from '@components/Layout/SplashLogo';
-import { BEIGE, BROWN, WHITE } from '@constants/Colors';
+import { BEIGE, BROWN, RED, WHITE } from '@constants/Colors';
 import globalState from "@states";
 import { Link } from 'expo-router';
 import { useAtom } from 'jotai';
@@ -53,6 +54,7 @@ export default function LoginScreen() {
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
         } catch (e) {
+            console.log(e)
             setErrorMessage(e as string);
         }
     }, [username, password]);
@@ -68,6 +70,11 @@ export default function LoginScreen() {
                 onChangeText={handleChangePassword}
                 secureTextEntry={true}
             />
+            {!!errorMessage &&
+                (<View>
+                    <Text style={styles.errorMessageText}>{errorMessage}</Text>
+                </View>)
+            }
             <AuthButton text="로그인" onPress={login} />
             <Link href="/RegisterScreen" asChild>
                 <Pressable style={styles.button}>
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: BEIGE,
-        paddingHorizontal : 20,
+        paddingHorizontal: 20,
     },
     title: {
         color: BROWN,
@@ -104,6 +111,11 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 15,
         fontWeight: 600,
+        fontFamily: "kotra"
+    },
+    errorMessageText: {
+        color: RED,
+        fontSize: 13,
         fontFamily: "kotra"
     }
 })

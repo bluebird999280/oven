@@ -16,10 +16,7 @@ export async function loginApi(username : string, password : string) : Promise<I
 
         return response.data;
     } catch(e : any) {
-        if(!e.errorMessage) {
-            throw e.errorMessage;
-        }
-        throw "알 수 없는 오류가 발생했습니다."
+        throw e.errorMessage ? e.errorMessage : "알 수 없는 오류가 발생했습니다"
     }
 }
 
@@ -31,10 +28,7 @@ export async function checkUsernameApi(username : string) : Promise<boolean> {
 
         return response.status === 200;
     } catch(e : any) {
-        if(!e.errorMessage) {
-            throw e.errorMessage;
-        }
-        throw "알 수 없는 오류가 발생했습니다."
+        throw e.errorMessage ? e.errorMessage : "알 수 없는 오류가 발생했습니다"
     }
 }
 
@@ -46,9 +40,6 @@ export async function registerApi(name : string, username : string, password : s
 
         return response.data;
     } catch(e : any) {
-        if(!e.errorMessage) {
-            throw e.errorMessage;
-        }
-        throw "알 수 없는 오류가 발생했습니다."
+        throw e.errorMessage ? e.errorMessage : "알 수 없는 오류가 발생했습니다"
     }
 }
