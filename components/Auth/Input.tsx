@@ -1,39 +1,47 @@
 import React from 'react';
-import { Dimensions, StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 type propsType = {
     placeholder: string,
     value: string,
     secureTextEntry: boolean,
-    onChangeText: (text : string) => void
+    onChangeText: (text: string) => void
 }
 
 export default function Input({ placeholder, value, onChangeText, secureTextEntry }: propsType) {
     return (
-        <TextInput
-            style={styles.textInput}
-            placeholder={placeholder}
-            maxLength={50}
-            autoCapitalize="none"
-            autoCorrect={false}
-            returnKeyType="done"
-            value={value}
-            onChangeText={onChangeText}
-            secureTextEntry={secureTextEntry}
-            placeholderTextColor="gray"
-        />
+        <View style={styles.container}>
+            <TextInput
+                style={styles.textInput}
+                placeholder={placeholder}
+                maxLength={50}
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="done"
+                value={value}
+                onChangeText={onChangeText}
+                secureTextEntry={secureTextEntry}
+                placeholderTextColor="gray"
+            />
+        </View>
+
     )
 }
 
 const styles = StyleSheet.create({
+    container : {
+        width: "100%",
+        paddingHorizontal : 30
+    },
     textInput: {
         backgroundColor: "white",
-        width: Dimensions.get('window').width - 60,
+        width: "100%",
         height: 50,
+        boxSizing: "border-box",
         marginVertical: 10,
         marginHorizontal: 0,
         paddingVertical: 0,
-        paddingHorizontal: 20,
+        paddingHorizontal: 30,
         borderRadius: 20,
         color: "black",
         fontSize: 20,
