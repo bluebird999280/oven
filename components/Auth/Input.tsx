@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
 type propsType = {
     placeholder: string,
@@ -10,8 +10,7 @@ type propsType = {
 
 export default function Input({ placeholder, value, onChangeText, secureTextEntry }: propsType) {
     return (
-        <View style={styles.container}>
-            <TextInput
+        <TextInput
                 style={styles.textInput}
                 placeholder={placeholder}
                 maxLength={50}
@@ -23,16 +22,11 @@ export default function Input({ placeholder, value, onChangeText, secureTextEntr
                 secureTextEntry={secureTextEntry}
                 placeholderTextColor="gray"
             />
-        </View>
 
     )
 }
 
 const styles = StyleSheet.create({
-    container : {
-        width: "100%",
-        paddingHorizontal : 30
-    },
     textInput: {
         backgroundColor: "white",
         width: "100%",
@@ -47,5 +41,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 600,
         fontFamily: "kotra",
+        flexShrink : 1
     }
 })

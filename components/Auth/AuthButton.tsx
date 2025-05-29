@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 
     text: {
         color: BEIGE,
-        fontSize: 25,
+        fontSize: 18,
         fontWeight: 800,
         fontFamily: "kotra"
     }
