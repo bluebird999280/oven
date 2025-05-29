@@ -1,5 +1,6 @@
 import { checkUsernameApi, registerApi } from '@apis/auth';
 import AuthButton from '@components/Auth/AuthButton';
+import AuthModal from "@components/Auth/AuthModal";
 import Input from '@components/Auth/Input';
 import { BEIGE, BROWN, ORANGE, RED, WHITE } from '@constants/Colors';
 import globalState from "@states";
@@ -9,12 +10,12 @@ import { useCallback, useState } from 'react';
 import {
     Alert,
     Image,
-    SafeAreaView,
     StyleSheet,
     Text,
     TouchableOpacity,
     View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function RegisterScreen() {
     const router = useRouter();
@@ -97,6 +98,7 @@ export default function RegisterScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
+            {isModalOpened && <AuthModal />}
             <Image style={styles.ovenLogo} source={require("@assets/img/oven_logo.png")} />
             <Text style={styles.title}>회원가입</Text>
             <Input
@@ -133,6 +135,7 @@ export default function RegisterScreen() {
                     <Text style={styles.errorMessageText}>{errorMessage}</Text>
                 </View>)
             }
+            <AuthButton text="영화 선택" onPress={() => setIsModalOpened(true)} />
             <AuthButton text="회원가입하기" onPress={register} />
         </SafeAreaView>
     );
@@ -140,7 +143,7 @@ export default function RegisterScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex : 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: BEIGE,
