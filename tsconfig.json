@@ -5,7 +5,9 @@
     "baseUrl": "./",
     "paths": {
       "@app/*" : ["app/*"],
+      "@apis/*" : ["apis/*"],
       "@hooks/*" : ["hooks/*"],
+      "@states" : ["states/"],
       "@states/*" : ["states/*"],
       "@assets/*" : ["assets/*"],
       "@constants/*" : ["constants/*"],
