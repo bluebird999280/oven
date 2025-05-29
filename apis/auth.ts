@@ -20,7 +20,7 @@ export async function loginApi(username : string, password : string) : Promise<I
     }
 }
 
-export async function checkUsernameApi(username : string) : Promise<boolean> {
+export async function checkUsernameApi(username : string) {
     try {
         const response = await axios.get("/auth/checkUsername", {
             data : { username }

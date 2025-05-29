@@ -1,4 +1,4 @@
-import { registerApi } from '@apis/auth';
+import { checkUsernameApi, registerApi } from '@apis/auth';
 import AuthButton from '@components/Auth/AuthButton';
 import Input from '@components/Auth/Input';
 import { BEIGE, BROWN, ORANGE, RED, WHITE } from '@constants/Colors';
@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
 import { useCallback, useState } from 'react';
 import {
+    Alert,
     Image,
     SafeAreaView,
     StyleSheet,
@@ -43,6 +44,21 @@ export default function RegisterScreen() {
     const handleChangePasswordConfirm = (passwordConfirm: string) => {
         setPasswordConfirm(passwordConfirm);
     };
+
+    const checkUsername = async () => {
+        if (id === "") {
+            setErrorMessage("아이디를 입력해주세요.");
+            return;
+        }
+
+        try {
+            await checkUsernameApi(id);
+        } catch(e) {
+            setErrorMessage(e as string);
+        } finally {
+            Alert.alert("아이디 중복 확인", `${id} 아이디를 사용하실 수 없습니다.`)
+        }
+    }
 
     const register = useCallback(async () => {
         if (name === "") {
@@ -96,7 +112,7 @@ export default function RegisterScreen() {
                     onChangeText={handleChangeId}
                     secureTextEntry={false}
                 />
-                <TouchableOpacity style={styles.checkDuplicationButton} onPress={() => { }}>
+                <TouchableOpacity style={styles.checkDuplicationButton} onPress={checkUsername}>
                     <Text style={styles.duplicationText}>중복 체크</Text>
                 </TouchableOpacity>
             </View>
