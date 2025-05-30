@@ -44,7 +44,6 @@ export default function MovieSelection() {
         <View style={styles.searchResultBox}>
             <FlatList
                 data={workList}
-                numColumns={3}
                 showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.workId.toString()}
 
@@ -53,7 +52,7 @@ export default function MovieSelection() {
                     return (
                         <TouchableOpacity style={styles.movie} onPress={() => handleMoviePress(item.workId)}>
                             <Image
-                                src={item.poster}
+                                source={item.poster}
                                 style={{
                                     ...styles.moviePoster,
                                     ...(isPosterSelected ? { borderWidth: 3, borderColor: RED, opacity: 0.3 } : { borderWidth: 1, borderColor: "transparent", opacity: 1 })
