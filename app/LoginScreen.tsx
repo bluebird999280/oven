@@ -7,10 +7,11 @@ import {
 } from 'react-native';
 
 import { loginApi } from '@apis/auth';
-import AuthButton from '@components/Auth/AuthButton';
-import Input from '@components/Auth/Input';
-import SplashLogo from '@components/Layout/SplashLogo';
+import AuthButton from '@components/auth/AuthButton';
+import Input from '@components/auth/Input';
+import SplashLogo from '@components/layout/SplashLogo';
 import { BEIGE, BROWN, RED, WHITE } from '@constants/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import globalState from "@states";
 import { Link } from 'expo-router';
 import { useAtom } from 'jotai';
@@ -51,8 +52,8 @@ export default function LoginScreen() {
             setIsLogin(true);
             setUserId(userId);
             setNickname(nickname);
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
+            await AsyncStorage.setItem("accessToken", accessToken);
+            await AsyncStorage.setItem("refreshToken", refreshToken);
         } catch (e) {
             console.log(e)
             setErrorMessage(e as string);
