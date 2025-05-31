@@ -1,4 +1,4 @@
-import MovieSelection from '@components/Auth/MovieSelection';
+import MovieSelection from '@components/auth/MovieSelection';
 import { BEIGE, BROWN, DARKRED, RED } from '@constants/Colors';
 import globalState from '@states';
 import { useAtom } from 'jotai';

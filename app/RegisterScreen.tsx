@@ -1,7 +1,7 @@
 import { checkUsernameApi, registerApi } from '@apis/auth';
-import AuthButton from '@components/Auth/AuthButton';
-import AuthModal from "@components/Auth/AuthModal";
-import Input from '@components/Auth/Input';
+import AuthButton from '@components/auth/AuthButton';
+import AuthModal from "@components/auth/AuthModal";
+import Input from '@components/auth/Input';
 import { BEIGE, BROWN, ORANGE, RED, WHITE } from '@constants/Colors';
 import globalState from "@states";
 import { useRouter } from 'expo-router';
