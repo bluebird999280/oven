@@ -13,16 +13,23 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 type myChatRoomsType = {
     chatroomId: number,
     title: string,
-    max: number
+    max: boolean,
     count: number,
     wholeNum: number,
     providerId: number,
 }
 
+const exampleChatRoot = [
+    {
+        chatroomId: 1,
+        title: "Test", wholeNum: 10, count: 2, providerId: 2, max: true
+    }
+]
+
 export default function ChatHomeScreen() {
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState("");
-    const [myChatRooms, setMyChatRooms] = useState<myChatRoomsType[]>([]);
+    const [myChatRooms, setMyChatRooms] = useState<myChatRoomsType[]>(exampleChatRoot);
     const [isLogin, setIsLogin] = useAtom(globalState.isLogin);
     const isFocused = useIsFocused();
 
@@ -31,7 +38,7 @@ export default function ChatHomeScreen() {
             try {
                 const accessToken = await AsyncStorage.getItem("accessToken");
                 if (accessToken === null) {
-                    router.navigate("/LoginScreen");
+                    // router.navigate("/LoginScreen");
                     return;
                 }
 
@@ -63,7 +70,7 @@ export default function ChatHomeScreen() {
                                         wholeNum={wholeNum}
                                         count={count}
                                         providerId={providerId}
-                                        max={max}
+                                        max={false}
                                     />
                                 </TouchableOpacity>
                             )

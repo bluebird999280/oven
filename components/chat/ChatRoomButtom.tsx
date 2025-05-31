@@ -10,7 +10,7 @@ interface IProps {
     wholeNum: number,
     count: number,
     providerId: number,
-    max: number
+    max: boolean
 }
 
 export default function ChatRoomButton({ index, title, wholeNum, count, providerId, max }: IProps) {
@@ -86,9 +86,6 @@ const styles = StyleSheet.create({
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
-        borderStyle: 'dashed',
-        borderWidth: 1,
-        borderRightColor: 'white'
     },
     ottLogo: {
         width: 50,
