@@ -23,7 +23,9 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="LoginScreen" />
           <Stack.Screen name="RegisterScreen" />
-          <Stack.Screen name="ChatHomeScreen" />
+          <Stack.Screen name="chat/ChatHomeScreen" />
+          <Stack.Screen name="chat/ChatRoomScreen" />
+          <Stack.Screen name="chat/rooms/[id]" />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
