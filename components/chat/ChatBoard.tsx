@@ -3,14 +3,19 @@ import {
     Dimensions,
     NativeScrollEvent,
     NativeSyntheticEvent,
+    ScrollView,
     StyleSheet,
     View
 } from 'react-native';
-import { ScrollView } from 'react-native-reanimated/lib/typescript/Animated';
 import Chat from './Chat';
 
 interface IProps {
-    chatList: string[]
+    chatList: {
+        content: any;
+        sendTime: any;
+        senderUsername: any;
+        senderNickname: any;
+    }[]
 }
 
 export default function ChatBoard({ chatList }: IProps) {
@@ -18,13 +23,13 @@ export default function ChatBoard({ chatList }: IProps) {
     const chatContentRef = useRef<View | null>(null);
     const [totalChatHeight, setTotalChatHeight] = useState(0);
 
-    const onScrollChat = (e : NativeSyntheticEvent<NativeScrollEvent>) => {
+    const onScrollChat = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
         if (e?.nativeEvent.contentOffset.y == 0) {
             setTotalChatHeight(e.nativeEvent.contentSize.height);
         }
     };
 
-    const onChangeChatSize = (contentWidth : number, contentHeight : number ) => {
+    const onChangeChatSize = (contentWidth: number, contentHeight: number) => {
         chatContentRef.current?.measure((x, y, width, height) => {
             chatScrollRef.current?.scrollTo({
                 x: 0,
@@ -36,7 +41,7 @@ export default function ChatBoard({ chatList }: IProps) {
 
     return (
         <View>
-            <ScrollView 
+            <ScrollView
                 ref={chatScrollRef}
                 style={styles.wrapper}
                 onScroll={onScrollChat}

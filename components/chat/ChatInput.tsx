@@ -3,16 +3,18 @@ import React from 'react';
 import {
     Dimensions,
     InputAccessoryView,
+    NativeSyntheticEvent,
     StyleSheet,
     TextInput,
+    TextInputSubmitEditingEventData,
     View
 } from 'react-native';
-import { Icon } from 'react-native-vector-icons/Icon';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface IProps {
     value: string,
     onChangeText: (text: string) => void,
-    onPress: () => void
+    onPress: (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void
 }
 
 export default function ChatInput({ value, onChangeText, onPress }: IProps) {
@@ -30,7 +32,7 @@ export default function ChatInput({ value, onChangeText, onPress }: IProps) {
                     name="paper-plane-outline"
                     style={styles.sendButton}
                     color={ORANGE}
-                    onPress={onPress}
+                   
                 />
             </InputAccessoryView>
         </View>
