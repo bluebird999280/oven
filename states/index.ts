@@ -4,7 +4,6 @@ import { ImageSourcePropType } from "react-native";
 export default {
   isModal : atom(false),
   isLogin : atom(false),
-  isStared : atom(false),
   isSignupModal : atom(false),
   isSummaryLoading : atom(false),
   userId : atom(""),
@@ -30,7 +29,7 @@ export default {
   lastWorkId : atom(null),
   detailMovie : atom([]),
   clickedOtt : atom(null),
-  clickedWork : atom(null),
+  clickedWork : atom<string>(""),
   selectedWork : atom<number[]>([]),
   searchedResult : atom([]),
   }

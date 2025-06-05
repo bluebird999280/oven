@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'jotai';
 import 'react-native-reanimated';
+import "text-encoding";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -21,11 +22,10 @@ export default function RootLayout() {
     <Provider>
       <ThemeProvider value={DefaultTheme}>
         <Stack>
-          <Stack.Screen name="chat/ChatHomeScreen" />
-          <Stack.Screen name="LoginScreen" />
-          <Stack.Screen name="RegisterScreen" />
+          {/* <Stack.Screen name="LoginScreen" /> */}
+          {/* <Stack.Screen name="RegisterScreen" /> */}
+          {/* <Stack.Screen name="chat/ChatHomeScreen" /> */}
           <Stack.Screen name="chat/ChatRoomScreen" />
-          <Stack.Screen name="chat/rooms/[id]" />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
